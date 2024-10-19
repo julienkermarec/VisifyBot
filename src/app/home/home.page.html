@@ -26,45 +26,46 @@
     </ion-item>
   </ion-list>
   <div id="ton-connect"></div>
-
-<section id="top_sect" class="second">
-  <ion-button (click)="expand();">Expand Webview</ion-button>
-  <ion-button (click)="toggleBackButton(this);">Show Back Button</ion-button>
-  <ion-button (click)="toggleSettingsButton(this);">Show Settings Button</ion-button>
-  <ion-button (click)="toggleMainButton(this);">Hide Main Button</ion-button>
-  <ion-button (click)="toggleSwipeBehavior(this);">Disable Vertical Swypes</ion-button>
-  <input type="text" placeholder="Input text in regular input..." id="regular_field" />
-  <div
-      class="input"
-      contenteditable="true"
-      data-placeholder="Input text in contenteditable field..."
-      id="text_field"
-  ></div>
-  <div id="peer_wrap" style="display:none">
+  <script>
+    const tonConnectUI = new TON_CONNECT_UI.TonConnectUI({
+        manifestUrl: 'https://julienkermarec.github.io/VisifyBot/assets/tonconnect-manifest.json',
+        buttonRootId: 'ton-connect'
+    });
+</script>
+  <section id="top_sect" class="second">
+    <ion-button (click)="expand();">Expand Webview</ion-button>
+    <ion-button (click)="toggleBackButton(this);">Show Back Button</ion-button>
+    <ion-button (click)="toggleSettingsButton(this);">Show Settings Button</ion-button>
+    <ion-button (click)="toggleMainButton(this);">Hide Main Button</ion-button>
+    <ion-button (click)="toggleSwipeBehavior(this);">Disable Vertical Swypes</ion-button>
+    <input type="text" placeholder="Input text in regular input..." id="regular_field" />
+    <div class="input" contenteditable="true" data-placeholder="Input text in contenteditable field..." id="text_field">
+    </div>
+    <div id="peer_wrap" style="display:none">
       <img id="peer_photo" class="chat_img" src="">
       <span id="peer_name"></span>
-  </div>
-  <div class="sect_row">Header: <input type="color" id="header_color_input" />
+    </div>
+    <div class="sect_row">Header: <input type="color" id="header_color_input" />
       <select id="header_color_sel">
-          <option value="bg_color" selected>bg_color</option>
-          <option value="secondary_bg_color">secondary_bg_color</option>
-          <option value="custom" id="header_color_val">custom...</option>
+        <option value="bg_color" selected>bg_color</option>
+        <option value="secondary_bg_color">secondary_bg_color</option>
+        <option value="custom" id="header_color_val">custom...</option>
       </select>
-  </div>
-  <div class="sect_row">Background: <input type="color" id="bg_color_input" />
+    </div>
+    <div class="sect_row">Background: <input type="color" id="bg_color_input" />
       <select id="bg_color_sel">
-          <option value="bg_color" selected>bg_color</option>
-          <option value="secondary_bg_color">secondary_bg_color</option>
-          <option value="custom" id="bg_color_val">custom...</option>
+        <option value="bg_color" selected>bg_color</option>
+        <option value="secondary_bg_color">secondary_bg_color</option>
+        <option value="custom" id="bg_color_val">custom...</option>
       </select>
-  </div>
-</section>
+    </div>
+  </section>
 
-<section>
-  <div id="btn_status" class="hint" style="display: none;"></div>
+  <section>
+    <div id="btn_status" class="hint" style="display: none;"></div>
 
-  <p>Test links:</p>
-  <ul>
+    <p>Test links:</p>
+    <ul>
       <li><a id="regular_link" href="?nextpage=1">Regular link #1</a> (opens inside webview)</li>
       <li><a href="https://telegram.org/" target="_blank">target="_blank" link</a> (opens outside webview)</li>
       <li><a href="javascript:window.open('https://telegram.org/');">window.open() link</a> (opens outside webview)</li>
@@ -72,121 +73,129 @@
       <li><a href="openTelegramLink('https://t.me/vote');">web_app_open_tg_link()</a> (opens inside Telegram app)</li>
       <li><a href="openLink('https://google.com/');">web_app_open_link()</a> (opens outside webview)</li>
       <li><a href="tg://resolve?domain=vote">VoteBot tg:// link</a> (does not open)</li>
-      <li><a href="openLinkTryInstantView('https://telegra.ph/api');">web_app_open_link(try_instant_view:true)</a> (opens IV inside Telegram app)</li>
-      <li><a href="openTelegramLink('https://t.me/DurgerKingBot/menu');">web_app_open_tg_link(webapp_direct_link)</a> (opens with confirm for the first time, then without)</li>
-  </ul>
-  <ul>
+      <li><a href="openLinkTryInstantView('https://telegra.ph/api');">web_app_open_link(try_instant_view:true)</a>
+        (opens IV inside Telegram app)</li>
+      <li><a href="openTelegramLink('https://t.me/DurgerKingBot/menu');">web_app_open_tg_link(webapp_direct_link)</a>
+        (opens with confirm for the first time, then without)</li>
+    </ul>
+    <ul>
       <li><a href="openLinkTryBrowser('https://telegram.org','chrome');">telegram.org</a> (opens in Chrome)</li>
       <li><a href="openLinkTryBrowser('https://telegram.org','firefox');">telegram.org</a> (opens in Firefox)</li>
       <li><a href="openLinkTryBrowser('https://telegram.org','safari');">telegram.org</a> (opens in Safari)</li>
       <li><a href="openLinkTryBrowser('https://telegram.org','opera');">telegram.org</a> (opens in Opera)</li>
       <li><ion-button (click)="close();">Return back</ion-button> (Android only)</li>
-  </ul>
+    </ul>
 
-  <p>Test permissions:</p>
-  <div class="columns">
+    <p>Test permissions:</p>
+    <div class="columns">
       <ul>
-          <li><ion-button (click)="requestLocation(this);">Request Location</ion-button> <span></span></li>
-          <li><ion-button (click)="requestVideo(this);">Request Video</ion-button> <span></span></li>
-          <li><ion-button (click)="requestAudio(this);">Request Audio</ion-button> <span></span></li>
-          <li><ion-button (click)="requestAudioVideo(this);">Request Audio+Video</ion-button> <span></span></li>
+        <li><ion-button (click)="requestLocation(this);">Request Location</ion-button> <span></span></li>
+        <li><ion-button (click)="requestVideo(this);">Request Video</ion-button> <span></span></li>
+        <li><ion-button (click)="requestAudio(this);">Request Audio</ion-button> <span></span></li>
+        <li><ion-button (click)="requestAudioVideo(this);">Request Audio+Video</ion-button> <span></span></li>
       </ul>
       <ul>
-          <li><ion-button (click)="requestWriteAccess(this);">Request write access</ion-button> <span></span></li>
-          <li><ion-button (click)="requestPhoneNumber(this);">Request phone number</ion-button> <span></span><br><br></li>
+        <li><ion-button (click)="requestWriteAccess(this);">Request write access</ion-button> <span></span></li>
+        <li><ion-button (click)="requestPhoneNumber(this);">Request phone number</ion-button> <span></span><br><br></li>
       </ul>
-  </div>
+    </div>
 
-  <p>Test alerts:</p>
-  <div class="columns">
+    <p>Test alerts:</p>
+    <div class="columns">
       <ul>
-          <li><ion-button (click)="showAlert('Hello!');">showAlert</ion-button></li>
-          <li><ion-button (click)="showConfirm('Are you sure?');">showConfirm</ion-button></li>
-          <li><ion-button (click)="requestWriteAccess();">requestWriteAccess</ion-button></li>
-          <li><ion-button (click)="requestContact();">requestContact</ion-button></li>
-          <li><ion-button (click)="showPopup();">showPopup</ion-button></li>
-          <li><ion-button (click)="showScanQrPopup();">showScanQrPopup</ion-button></li>
-          <li><ion-button (click)="showScanQrPopup(true);">showScanQrPopup (links only)</ion-button></li>
+        <li><ion-button (click)="showAlert('Hello!');">showAlert</ion-button></li>
+        <li><ion-button (click)="showConfirm('Are you sure?');">showConfirm</ion-button></li>
+        <li><ion-button (click)="requestWriteAccess();">requestWriteAccess</ion-button></li>
+        <li><ion-button (click)="requestContact();">requestContact</ion-button></li>
+        <li><ion-button (click)="showPopup();">showPopup</ion-button></li>
+        <li><ion-button (click)="showScanQrPopup();">showScanQrPopup</ion-button></li>
+        <li><ion-button (click)="showScanQrPopup(true);">showScanQrPopup (links only)</ion-button></li>
       </ul>
-  </div>
+    </div>
 
-  <p>Haptics:</p>
-  <ul>
-      <li>Impact: 
-        <ion-button (click)="impactOccurred(ImpactHapticStyle.Heavy);">heavy</ion-button>, &nbsp; 
-        <ion-button (click)="impactOccurred(ImpactHapticStyle.Light);">light</ion-button>, &nbsp; 
-        <ion-button (click)="impactOccurred(ImpactHapticStyle.Medium);">medium</ion-button>, &nbsp; 
-        <ion-button (click)="impactOccurred(ImpactHapticStyle.Rigid);">rigid</ion-button>, &nbsp; 
+    <p>Haptics:</p>
+    <ul>
+      <li>Impact:
+        <ion-button (click)="impactOccurred(ImpactHapticStyle.Heavy);">heavy</ion-button>, &nbsp;
+        <ion-button (click)="impactOccurred(ImpactHapticStyle.Light);">light</ion-button>, &nbsp;
+        <ion-button (click)="impactOccurred(ImpactHapticStyle.Medium);">medium</ion-button>, &nbsp;
+        <ion-button (click)="impactOccurred(ImpactHapticStyle.Rigid);">rigid</ion-button>, &nbsp;
         <ion-button (click)="impactOccurred(ImpactHapticStyle.Soft);">soft</ion-button><br><br>
       </li>
-      <li>Notification: 
-        <ion-button (click)="notificationOccurred(NotificationHapticStyle.Error);">error</ion-button>, &nbsp; 
-        <ion-button (click)="notificationOccurred(NotificationHapticStyle.Success);">success</ion-button>, &nbsp; 
+      <li>Notification:
+        <ion-button (click)="notificationOccurred(NotificationHapticStyle.Error);">error</ion-button>, &nbsp;
+        <ion-button (click)="notificationOccurred(NotificationHapticStyle.Success);">success</ion-button>, &nbsp;
         <ion-button (click)="notificationOccurred(NotificationHapticStyle.Warning);">warning</ion-button><br><br>
       </li>
-     
-  </ul>
 
-  <p>Cloud storage:</p>
-  <form name="form" (submit)="saveCloudForm(this, $event);">
+    </ul>
+
+    <p>Cloud storage:</p>
+    <form name="form" (submit)="saveCloudForm(this, $event);">
       <table class="table table-bordered small">
-          <thead>
+        <thead>
           <tr>
-              <th width="20%">Key</th>
-              <th width="70%">Value</th>
-              <th width="10%"></th>
+            <th width="20%">Key</th>
+            <th width="70%">Value</th>
+            <th width="10%"></th>
           </tr>
-          </thead>
-          <tbody id="cloud_rows"></tbody>
-          <tfoot>
-            <tr *ngFor="let item of cloudStorageKeys; let i = index;" >
-              <td>{{item.key}}</td>
-              <td>{{item.value}}</td>
-              <td><ion-button (click)="editCloudRow(this, $event, i);">Edit</ion-button>
-                <ion-button (click)="deleteCloudRow(this, $event, i);">Delete</ion-button>
-              </td>
-            </tr>
+        </thead>
+        <tbody id="cloud_rows"></tbody>
+        <tfoot>
+          <tr *ngFor="let item of cloudStorageKeys; let i = index;">
+            <td>{{item.key}}</td>
+            <td>{{item.value}}</td>
+            <td><ion-button (click)="editCloudRow(this, $event, i);">Edit</ion-button>
+              <ion-button (click)="deleteCloudRow(this, $event, i);">Delete</ion-button>
+            </td>
+          </tr>
           <tr>
-              <td><ion-input type="text"  [ngModelOptions]="{standalone: true}" [(ngModel)]="form.key"></ion-input></td>
-              <td><ion-input type="text"  [ngModelOptions]="{standalone: true}"  [(ngModel)]="form.value"></ion-input></td>
-              <td>
-                  <ion-button type="submit">Save</ion-button>
-                  <ion-button type="reset">Clear</ion-button>
-              </td>
+            <td><ion-input type="text" [ngModelOptions]="{standalone: true}" [(ngModel)]="form.key"></ion-input></td>
+            <td><ion-input type="text" [ngModelOptions]="{standalone: true}" [(ngModel)]="form.value"></ion-input></td>
+            <td>
+              <ion-button type="submit">Save</ion-button>
+              <ion-button type="reset">Clear</ion-button>
+            </td>
           </tr>
-          </tfoot>
+        </tfoot>
       </table>
-  </form>
+    </form>
 
-  <p>Biometrics:</p>
-  <div class="columns">
+    <p>Biometrics:</p>
+    <div class="columns">
       <ul>
-          <li>isInited: <span class="txt" id="bm_inited">false</span> (<ion-button (click)="biometricInit(this);">Init</ion-button>)</li>
-          <li>available: <span class="txt" id="bm_available">false</span></li>
-          <li>type: <span class="txt" id="bm_type"></span></li>
-          <li>access_requested: <span class="txt" id="bm_access_requested">false</span> (<ion-button (click)="biometricRequestAccess(this);">Request access</ion-button>) <span></span></li>
-          <li>access_granted: <span class="txt" id="bm_access_granted">false</span> <span id="bm_settings" style="display:none;">(<ion-button (click)="biometricOpenSettings(this);">Open settings</ion-button>)</span></li>
-          <li>token_saved: <span class="txt" id="bm_token_saved">false</span> (<ion-button (click)="biometricSetToken(this);">Set token</ion-button>, <ion-button (click)="biometricRemoveToken(this);">Remove token</ion-button>) <span></span></li>
-          <li>device_id: <span class="txt" id="bm_device_id"></span></li>
-          <li><ion-button (click)="biometricRequestAuth(this);">Request auth</ion-button> <span></span></li>
+        <li>isInited: <span class="txt" id="bm_inited">false</span> (<ion-button
+            (click)="biometricInit(this);">Init</ion-button>)</li>
+        <li>available: <span class="txt" id="bm_available">false</span></li>
+        <li>type: <span class="txt" id="bm_type"></span></li>
+        <li>access_requested: <span class="txt" id="bm_access_requested">false</span> (<ion-button
+            (click)="biometricRequestAccess(this);">Request access</ion-button>) <span></span></li>
+        <li>access_granted: <span class="txt" id="bm_access_granted">false</span> <span id="bm_settings"
+            style="display:none;">(<ion-button (click)="biometricOpenSettings(this);">Open settings</ion-button>)</span>
+        </li>
+        <li>token_saved: <span class="txt" id="bm_token_saved">false</span> (<ion-button
+            (click)="biometricSetToken(this);">Set token</ion-button>, <ion-button
+            (click)="biometricRemoveToken(this);">Remove token</ion-button>) <span></span></li>
+        <li>device_id: <span class="txt" id="bm_device_id"></span></li>
+        <li><ion-button (click)="biometricRequestAuth(this);">Request auth</ion-button> <span></span></li>
       </ul>
-  </div>
+    </div>
 
-  <pre><code id="webview_data"></code></pre>
-  <div class="hint">
+    <pre><code id="webview_data"></code></pre>
+    <div class="hint">
       Data passed to webview.
       <span id="webview_data_status" class="status_need">Checking hash...</span>
-  </div>
-  <pre><code id="theme_data"></code></pre>
-  <div class="hint">
+    </div>
+    <pre><code id="theme_data"></code></pre>
+    <div class="hint">
       Theme params
-  </div>
-  <div class="hint">
+    </div>
+    <div class="hint">
       Version: <span id="ver"></span>,
       platform: <span id="platform"></span>
-  </div>
-</section>
+    </div>
+  </section>
 
-<div class="viewport-border"></div>
-<div class="viewport-stable_border"></div>
+  <div class="viewport-border"></div>
+  <div class="viewport-stable_border"></div>
 </ion-content>
