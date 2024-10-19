@@ -23,6 +23,7 @@
     "@angular/router": "^18.0.0",
     "@ionic/angular": "^8.0.0",
     "@m1cron-labs/ng-telegram-mini-app": "^7.8.0",
+    "@tonconnect/ui": "^2.0.9",
     "ionicons": "^7.0.0",
     "rxjs": "~7.8.0",
     "tslib": "^2.3.0",
