@@ -58,11 +58,12 @@ export class HomeDetailsPage {
       "textCase": 0
     }
     if(newAd.icon !== '') {
-      data = {...data, icon: newAd.icon, pushIcon: 2}
+      data = {...data, icon: newAd.icon, pushIcon: 0}
     }
     let device_id = this.device().uid;
     let owner_id = this.friendlyAddress();
     this.backendApiService?.createAd(device_id, owner_id || '', data);
+    this.presentPublishConfirm();
   }
 
   async chooseIcon(option?: any): Promise<void> {
@@ -72,14 +73,18 @@ export class HomeDetailsPage {
       value: null
     }, {
       label: 'Telegram',
-      value: 'icon1'
+      value: 7427
     }, {
       label: 'Instagram',
-      value: 'icon2'
+      value: 3741
     }, {
-      label: 'Facebook',
-      value: 'icon3'
-    }]
+      label: 'Tiktok',
+      value: 39791
+    },{
+      label: 'Whatsapp',
+      value: 25545
+    }
+  ]
     let inputs = list.map((o: any) => {
       return {
         type: 'radio',
@@ -132,6 +137,41 @@ export class HomeDetailsPage {
           handler: async (event): Promise<void> => {
             console.log('event', event);
             this.newAd.set({...(this.newAd()), text: event.value });
+          },
+        },
+      ],
+    });
+  }
+  presentPublish(){
+
+    void this.dialogService.presentAlert({
+      header: 'Confirm publishing',
+      subHeader: 'Are you sure to update ?',
+      buttons: [
+        {
+          role: 'cancel',
+          text: 'Cancel',
+        },
+        {
+          text: 'Confirm',
+          handler: async (event): Promise<void> => {
+            console.log('event', event);
+            this.publish();
+          },
+        },
+      ],
+    });
+  }
+  presentPublishConfirm(){
+
+    void this.dialogService.presentAlert({
+      header: 'Publishing succesfull',
+      subHeader: 'Your ad has been published',
+      buttons: [
+        {
+          text: 'OK',
+          handler: async (event): Promise<void> => {
+            console.log('event', event);
           },
         },
       ],

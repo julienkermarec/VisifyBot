@@ -3,21 +3,37 @@ ion-header {
     --ion-toolbar-background: transparent;
   }
 }
-
-ion-list
-ion-item {
-  ion-thumbnail {
-    --border-radius : 12px;
-  }
-  ion-label{
-    h2 {
-      font-weight :600;
+ion-content {
+  ion-toolbar {
+    --ion-toolbar-background: transparent;
+    --padding-start: 13px;
+    ion-button {
+      min-height: 25px;
+      --padding-top: 7px;
+      --padding-bottom: 7px;
+      --border-radius: 5px;
     }
-    p {
-      ion-note {
-
-    font-size: 14Px;
-    --color: #454545;
+  }
+}
+ion-list {
+  ion-list-header {
+    ion-label,ion-button {
+      margin-top : 5px;
+    }
+  }
+  ion-item {
+    ion-thumbnail {
+      --border-radius: 12px;
+    }
+    ion-label {
+      h2 {
+        font-weight: 600;
+      }
+      p {
+        ion-note {
+          font-size: 14px;
+          --color: #454545;
+        }
       }
     }
   }

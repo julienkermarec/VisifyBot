@@ -30,13 +30,19 @@
 
 <ion-content [fullscreen]="true">
   <div #tonconnectbutton id="tonconnectbutton"></div>
+  <ion-toolbar>
+    <ion-button fill="outline" color="medium" >
+      🇫🇷&nbsp; Paris
+    </ion-button>
+  </ion-toolbar>
   <ion-list>
     <ion-list-header>
       <ion-label>
         Displays
       </ion-label>
       <ion-button color="primary"  fill="clear">
-        Sell All
+        See All
+        <ion-icon slot="end" name="chevron-forward-outline"></ion-icon>
       </ion-button>
     </ion-list-header>
     @for (display of devices();

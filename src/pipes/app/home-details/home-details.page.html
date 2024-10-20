@@ -67,7 +67,11 @@
       <ion-icon name="image" slot="start"></ion-icon>
       <ion-label>Icon</ion-label>
       <ion-text  slot="end">
-      {{ newAd().icon}}
+        <span *ngIf="newAd().icon !== null && newAd().icon !== ''">
+          <img src="assets/{{newAd().icon}}.png" alt="" style="width: 28.5px;     height: 28.5px;" class="logo" />
+        </span>
+        <span *ngIf="newAd().icon === null || newAd().icon === ''"></span>
+      
       </ion-text>
     </ion-item>
     <ion-item detail="true" (click)="chooseText()">
@@ -79,8 +83,8 @@
     </ion-item>
   </ion-list>
 
-  <ion-button class="ion-margin" expand="block"(click)="publish()">
-    Publish you content
+  <ion-button class="ion-margin" expand="block"(click)="presentPublish()">
+    Publish your content
   </ion-button>
 }
 </ion-content>
