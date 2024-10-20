@@ -4,7 +4,7 @@
 
 export const environment = {
   production: false,
-  backendApiUrl: 'http://visify.julienkermarec.com'
+  backendApiUrl: 'https://visify.julienkermarec.com'
 };
 
 /*

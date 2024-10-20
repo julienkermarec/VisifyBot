@@ -23,6 +23,11 @@
 `npx angular-cli-ghpages --dir=www`
 
 
+##  buffeer problem
+
+git config --global http.postBuffer 157286400
+
+
 
 Here is how to use angular-cli-ghpages with Ionic 4:
 

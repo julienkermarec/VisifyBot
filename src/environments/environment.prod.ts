@@ -1,4 +1,4 @@
 export const environment = {
   production: true,
-  backendApiUrl: 'http://visify.julienkermarec.com'
+  backendApiUrl: 'https://visify.julienkermarec.com'
 };
