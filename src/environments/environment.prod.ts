@@ -1,3 +1,4 @@
 export const environment = {
-  production: true
+  production: true,
+  backendApiUrl: 'http://visify.julienkermarec.com'
 };

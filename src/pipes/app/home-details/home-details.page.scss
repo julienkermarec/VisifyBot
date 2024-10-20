@@ -1,0 +1,29 @@
+ion-header {
+    position :absolute;
+    top: 0;
+
+        ion-toolbar {
+            --ion-toolbar-background: transparent;
+            --border-width: 0px;
+        }
+}
+
+ion-content {
+    img {
+        max-height: 240px;
+        width: 100%;
+        object-fit:cover;
+        object-position: center center;
+    }
+
+    ion-list {
+        margin-top : 0px;
+        ion-list-header {
+            margin-top : 0px;
+            ion-label {
+                margin-top: 5px;
+            }
+
+        }
+    }
+}

@@ -2,24 +2,25 @@ import { Component, DestroyRef, Inject, inject, OnDestroy, OnInit, signal } from
 import { TonConnectService } from '../../../services/ton-connect.service';
 import { ConnectedWallet, toUserFriendlyAddress } from '@tonconnect/ui';
 import { DevicesService } from '../../../services/devices.services';
-import { TelegramService } from '../../../services/telegram.service';
-
+import { UserService } from '../../../services/user.service';
+import { NavController } from '@ionic/angular';
+import { StoreService } from '../../../services/store.service';
 @Component({
   selector: 'app-home',
   templateUrl: 'home.page.html',
   styleUrls: ['home.page.scss'],
 })
 export class HomePage implements OnInit, OnDestroy {
-  private telegramService = inject(TelegramService);
+  private userService = inject(UserService);
+  private storeService = inject(StoreService);
   private devicesService = inject(DevicesService);
-  private tonConnectService = inject(TonConnectService);
-  private destroyRef = inject(DestroyRef);
   viewportBorder = '';
   // cloud storage
   cloudStorageKeys: any = {};
   cloudStorageItems: any = {};
   form = { key: '', value: '' };
   searchTerm: any = ''
+  subscriber:any = null;
 
 
   loading = signal<boolean>(false);
@@ -32,87 +33,72 @@ export class HomePage implements OnInit, OnDestroy {
 
 
   constructor(
+    private navController: NavController
   ) {
   }
 
   ngOnDestroy() {
-    console.debug('ngOnDestroy');
+    console.log('ngOnDestroy');
   }
 
   ngOnInit() {
-    console.debug('Telegram Web App is ready');
-    this.initUser();
-    this.initWallet();
+    // this.initUser();
+    // this.storeService
     this.initDevices();
+    // window.addEventListener('load', () => {
+    // this.initUser();
+    // });
+    this.connected = this.storeService.connected;
+    this.friendlyAddress = this.storeService.friendlyAddress;
+    this.wallet = this.storeService.wallet;
   }
 
-  initUser() {
-    // let user = this.telegramService.initialize;
-    let user = this.telegramService.user;
-    console.log('user', user);
-    setTimeout(() => {
-    let user = this.telegramService.user;
-    console.log('user', user);
-  }, 1000);
+
+  ionViewDidLeave() {
   }
+
+  async connect(){
+    this.storeService.connect();
+  }
+  async disconnect(){
+    this.storeService.disconnect();
+  }
+  async goToDetails(display: any){
+    console.log('goToDetails', this.subscriber);
+    if(this.subscriber != null){
+      
+      // this.subscriber.unsubscribe();
+      this.subscriber = null;
+      }
+    return this.navController.navigateForward(['/tabs/home/' + display.uid], {});
+  }
+  async initUser(){
+    console.log('ngOnInit');
+    try {
+      await this.userService.init(5000,2000);
+      let initData = this.userService.getInitData();
+      console.log(this.userService.getInitDataUnsafe());
+    } catch (error) {
+      console.error('Erreur lors de l\'initialisation de Telegram WebApp:', error);
+      console.log('window.Telegram.WebApp.initDataUnsafe.user', window.Telegram.WebApp.initDataUnsafe.user);
+      // Gérer l'erreur (par exemple, afficher un message à l'utilisateur)
+    }
+  }
+
+  // initUser() {
+  //   // let user = this.telegramService.initialize;
+  // //   let user = this.telegramService.user;
+  // //   console.log('user', user);
+  // //   setTimeout(() => {
+  // //   let user = this.telegramService.user;
+  // //   console.log('user', user);
+  // // }, 1000);
+  // }
   initDevices() {
     this.devices.set(this.devicesService.devices);
   }
-  initWallet() {
-    this.tonConnectService.init();
-    const unsubscribe = this.tonConnectService.tonConnectUI?.onStatusChange(async (wallet: ConnectedWallet | null) => {
-      console.log("Connected wallet:", wallet);
-      if (wallet?.account) {
-        this.loading.set(true);
-        try {
-          let isTestnet = wallet.account.chain === '-3'
-          let friendlyAddress = toUserFriendlyAddress(
-            wallet.account.address,
-            isTestnet
-          )
-          this.friendlyAddress.set(friendlyAddress);
-          this.connected.set(true);
-          this.loading.set(false);
-          this.wallet.set(wallet);
-
-          console.log("Creating user and snapshot...", {
-            connected: await this.tonConnectService.tonConnectUI?.connected,
-            debug: await this.tonConnectService.tonConnectUI?.getWallets(),
-            wallet: this.tonConnectService.tonConnectUI?.wallet,
-            account: this.tonConnectService.tonConnectUI?.account
-          });
-          console.log("Connected wallet friendlyAddress", friendlyAddress);
-          // this.finishService.createUserAndSnapshot().pipe(
-          //   takeUntilDestroyed(this.destroyRef)
-          // ).subscribe(() => {
-          //   this.router.navigate(['/dashboard']);
-          // });
-        } catch (error) {
-          console.error(error);
-          this.loading.set(false);
-        }
-      }
-    });
-
-    this.destroyRef.onDestroy(() => {
-      if (unsubscribe)
-        unsubscribe();
-    })
-  }
-
-  disconnect(): void {
-    this.loading.set(true);
-    this.tonConnectService.tonConnectUI?.disconnect();
-    this.connected.set(false);
-    this.loading.set(false);
-    this.wallet.set(null);
-  }
   public trackByIndex(index: number): number {
     return index;
-  }
-  connect(): void {
-    this.tonConnectService.tonConnectUI?.openModal();
-
   }
 
   search(event: any){

@@ -1,22 +1,25 @@
-<ion-header [translucent]="true" class="ion-no-border">
+<ion-header [translucent]="false" class="ion-no-border">
   <ion-toolbar>
     <ion-buttons slot="start">
+      
     </ion-buttons>
     <ion-buttons slot="end">
       @if (!loading()){
       @if (!connected()){
-      <ion-button shape="round" fill="solid" color="primary"  (click)="connect()">
+      <ion-button  color="light" shape="round" fill="solid"  (click)="connect()">
         <ion-label>Connect Wallet</ion-label>
       </ion-button>
       } @else {
-      <ion-button   shape="round" fill="outline"  color="primary" (click)="disconnect()">
+      <ion-button   color="light" shape="round" fill="solid" (click)="disconnect()">
         <!-- <ion-icon slot="start" name="person"></ion-icon> -->
-        {{friendlyAddress() || '' | walletAddressShortener}}
+        &nbsp;&nbsp;{{friendlyAddress() || '' | walletAddressShortener}}
         <ion-icon slot="end" name="chevron-down"></ion-icon>
       </ion-button>
       }
       } @else {
-      <ion-button  shape="round" fill="outline"  color="primary" [disabled]="true">Loading</ion-button>
+      <ion-button  color="light" shape="round" fill="solid"  [disabled]="true">
+        &nbsp;&nbsp;Loading
+      </ion-button>
       }
     </ion-buttons>
   </ion-toolbar>
@@ -39,10 +42,17 @@
     @for (display of devices();
     track trackByIndex(setIndex);
     let setIndex = $index;) {
-    <ion-item>
+    <ion-item (click)="goToDetails(display)" detail="true">
+      <ion-thumbnail slot="start">
+        <img [src]="'assets/' + display.icon" />
+      </ion-thumbnail>
       <ion-label>
         <h2>{{display.name}}</h2>
-        <p>{{display.adress}}</p>
+        <p>
+          <ion-text>{{display.lastUpdate | date: 'dd/MM/yyyy'}} - {{display.lastUpdate | date: 'HH:mm'}}</ion-text><br />
+          <ion-note>{{display.owner | walletAddressShortener}}</ion-note>
+        </p>
+        
       </ion-label>
     </ion-item>
   }

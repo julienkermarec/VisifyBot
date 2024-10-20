@@ -3,3 +3,22 @@ ion-header {
     --ion-toolbar-background: transparent;
   }
 }
+
+ion-list
+ion-item {
+  ion-thumbnail {
+    --border-radius : 12px;
+  }
+  ion-label{
+    h2 {
+      font-weight :600;
+    }
+    p {
+      ion-note {
+
+    font-size: 14Px;
+    --color: #454545;
+      }
+    }
+  }
+}

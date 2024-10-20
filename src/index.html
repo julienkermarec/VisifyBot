@@ -20,6 +20,21 @@
 
 <body>
   <app-root></app-root>
+  <script src="https://telegram.org/js/telegram-web-app.js"></script>
+  <script>
+      window.addEventListener('load', () => {
+          if (window.Telegram && window.Telegram.WebApp) {
+              console.log('Telegram WebApp found');
+              window.Telegram.WebApp.ready(() => {
+                  console.log('Telegram WebApp ready');
+                  document.getElementById('status').innerText = 'Initialized: ' + window.Telegram.WebApp.initDataUnsafe.user.username;
+              });
+          } else {
+              console.error('Telegram WebApp not found');
+              document.getElementById('status').innerText = 'Error: Telegram WebApp not found';
+          }
+      });
+  </script>
 </body>
 
 </html>

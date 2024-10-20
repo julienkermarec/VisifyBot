@@ -1,0 +1,86 @@
+<ion-header [translucent]="false">
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button color="light" defaultHref="/tabs/home" [text]="'Back'"></ion-back-button>
+    </ion-buttons>
+
+    <ion-buttons slot="end">
+      @if (!loading()){
+      @if (!connected()){
+      <ion-button color="light" shape="round" fill="solid"  (click)="connect()">
+        <ion-label>Connect Wallet</ion-label>
+      </ion-button>
+      } @else {
+      <ion-button color="light" shape="round" fill="solid"  (click)="disconnect()">
+        <!-- <ion-icon slot="start" name="person"></ion-icon> -->
+        {{friendlyAddress() || '' | walletAddressShortener}}
+        <ion-icon slot="end" name="chevron-down"></ion-icon>
+      </ion-button>
+      }
+      } @else {
+      <ion-button color="light" shape="round" fill="solid"  [disabled]="true">Loading</ion-button>
+      }
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  @if (!loading() && device()){
+  <img [src]="'assets/' + device().icon" alt="" class="logo" />
+  <ion-list>
+
+    <ion-list-header>
+    <ion-label>
+      <span >{{device().name}}</span>
+    </ion-label>
+    </ion-list-header>
+    <ion-item >
+      <ion-icon name="calendar" slot="start"></ion-icon>
+      <ion-label>
+        <h2>Last update</h2>
+        <p>
+      <ion-text>
+        {{ device().lastUpdate | date: 'dd/MM/yyyy'}} - {{ device().lastUpdate | date: 'HH:mm'}}
+       </ion-text>
+        </p>
+      </ion-label>
+    </ion-item>
+    <ion-item >
+      <ion-icon name="person" slot="start"></ion-icon>
+      <ion-label>
+        <h2>Owner</h2>
+        <p>
+      <ion-text >
+        {{ device().owner | walletAddressShortener: 12:12}}
+       </ion-text>
+        </p>
+      </ion-label>
+    </ion-item>
+
+
+    <ion-list-header>
+      <ion-label>
+        Add your content 
+      </ion-label>
+      </ion-list-header>
+    <ion-item detail="true" (click)="chooseIcon()">
+      <ion-icon name="image" slot="start"></ion-icon>
+      <ion-label>Icon</ion-label>
+      <ion-text  slot="end">
+      {{ newAd().icon}}
+      </ion-text>
+    </ion-item>
+    <ion-item detail="true" (click)="chooseText()">
+      <ion-icon name="text" slot="start"></ion-icon>
+      <ion-label>Text</ion-label>
+      <ion-text  slot="end">
+       {{ newAd().text}}
+      </ion-text>
+    </ion-item>
+  </ion-list>
+
+  <ion-button class="ion-margin" expand="block"(click)="publish()">
+    Publish you content
+  </ion-button>
+}
+</ion-content>
