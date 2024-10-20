@@ -37,7 +37,7 @@ export class DevicesService {
     },
     {
       ip_address: "10.10.11.157",
-      name: "Create Onwers, Not Followers",
+      name: "Create Owners, Not Followers",
       stats: {},
       status: 1,
       uid: "awtrix_8f4460",
