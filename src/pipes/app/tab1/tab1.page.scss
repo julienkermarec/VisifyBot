@@ -1,0 +1,33 @@
+
+ion-list {
+    ion-list-header {
+      ion-label,ion-button {
+        margin-top : 5px;
+      }
+    }
+    ion-item {    --border-width: 1px;
+      --border-color: var(--ion-color-medium);
+      --border-radius: 18px;
+      margin: 0px 14px 10px;
+      --padding-start: 9px;
+      ion-thumbnail {
+        --border-radius: 12px;
+      }
+      ion-label {
+        h2 {
+          overflow: hidden;
+          font-weight: 600;
+          font-size: 16px;
+          text-overflow: ellipsis;
+          white-space: nowrap;
+        }
+        p {
+          ion-note {
+            font-size: 14px;
+            --color: #454545;
+          }
+        }
+      }
+    }
+  }
+  

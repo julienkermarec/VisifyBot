@@ -146,7 +146,8 @@ export class HomeDetailsPage {
 
     void this.dialogService.presentAlert({
       header: 'Confirm publishing',
-      subHeader: 'Are you sure to update ?',
+      subHeader: '20 $VSFY will be charged',
+      message: 'Are you sure to update ?',
       buttons: [
         {
           role: 'cancel',

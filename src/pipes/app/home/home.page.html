@@ -2,6 +2,9 @@
   <ion-toolbar>
     <ion-buttons slot="start">
       
+      <ion-button  color="light" shape="round" fill="solid" >
+        &nbsp;100&nbsp;$VSFY&nbsp;
+      </ion-button>
     </ion-buttons>
     <ion-buttons slot="end">
       @if (!loading()){
@@ -31,9 +34,20 @@
 <ion-content [fullscreen]="true">
   <div #tonconnectbutton id="tonconnectbutton"></div>
   <ion-toolbar>
+    <div class="scrollh">
     <ion-button fill="outline" color="medium" >
       🇫🇷&nbsp; Paris
     </ion-button>
+    <ion-button fill="outline" color="medium" >
+      🇮🇹&nbsp; Rome
+    </ion-button>
+    <ion-button fill="outline" color="medium" >
+      🇺🇦&nbsp; Kyiv
+    </ion-button>
+    <ion-button fill="outline" color="medium" >
+      🇩🇪&nbsp; Berlin
+    </ion-button>
+  </div>
   </ion-toolbar>
   <ion-list>
     <ion-list-header>
@@ -48,7 +62,7 @@
     @for (display of devices();
     track trackByIndex(setIndex);
     let setIndex = $index;) {
-    <ion-item (click)="goToDetails(display)" detail="true">
+    <ion-item (click)="goToDetails(display)" detail="true" lines="none">
       <ion-thumbnail slot="start">
         <img [src]="'assets/' + display.icon" />
       </ion-thumbnail>
