@@ -1,0 +1,52 @@
+<ion-header [translucent]="true" class="ion-no-border">
+  <ion-toolbar>
+    <ion-buttons slot="start">
+    </ion-buttons>
+    <ion-buttons slot="end">
+      @if (!loading()){
+      @if (!connected()){
+      <ion-button shape="round" fill="solid" color="primary"  (click)="connect()">
+        <ion-label>Connect Wallet</ion-label>
+      </ion-button>
+      } @else {
+      <ion-button   shape="round" fill="outline"  color="primary" (click)="disconnect()">
+        <!-- <ion-icon slot="start" name="person"></ion-icon> -->
+        {{friendlyAddress() || '' | walletAddressShortener}}
+        <ion-icon slot="end" name="chevron-down"></ion-icon>
+      </ion-button>
+      }
+      } @else {
+      <ion-button  shape="round" fill="outline"  color="primary" [disabled]="true">Loading</ion-button>
+      }
+    </ion-buttons>
+  </ion-toolbar>
+  <ion-toolbar>
+    <ion-searchbar [(ngModel)]="searchTerm" (ionChange)="search($event)"></ion-searchbar>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <div #tonconnectbutton id="tonconnectbutton"></div>
+  <ion-list>
+    <ion-list-header>
+      <ion-label>
+        Displays
+      </ion-label>
+      <ion-button color="primary"  fill="clear">
+        Sell All
+      </ion-button>
+    </ion-list-header>
+    @for (display of devices();
+    track trackByIndex(setIndex);
+    let setIndex = $index;) {
+    <ion-item>
+      <ion-label>
+        <h2>{{display.name}}</h2>
+        <p>{{display.adress}}</p>
+      </ion-label>
+    </ion-item>
+  }
+  </ion-list>
+  <div class="viewport-border"></div>
+  <div class="viewport-stable_border"></div>
+</ion-content>

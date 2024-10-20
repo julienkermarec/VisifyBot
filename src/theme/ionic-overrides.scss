@@ -1,0 +1,24 @@
+ion-button {
+  --box-shadow: 0;
+}
+
+ion-button:has(ion-spinner)::part(native) {
+  padding-top: 7px;
+  padding-bottom: 7px;
+}
+
+.md ion-back-button::part(text) {
+  display: none;
+}
+
+.ios body.ion-palette-dark {
+  ion-list.list-inset ion-item {
+    --background: var(--ion-color-light);
+  }
+}
+
+.ios body:not(.ion-palette-dark) {
+  ion-datetime {
+    --background: white;
+  }
+}
